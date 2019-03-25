@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberBatis">  
+  <select id="getAllCommunity">
+ SELECT tcmd.*
+    FROM   TB_CM_MEM_DT tcmd INNER JOIN ( SELECT   *
+        FROM   TB_CM_CMUT_MEM
+            WHERE   CMUT_NO = (   SELECT   CMUT_NO
+                FROM   TB_CM_CMUT tcc
+                WHERE   tcc.${test1} = #{test2})) tccm
+    ON (tccm.MEM_NO = tcmd.MEM_NO);
+  </select>
+
+<select id="insertCommunity">
+INSERT INTO TB_CM_CMUT_MEM (CMUT_NO, MEM_NO, CMUT_MEM_NM ,CMUT_MEM_TITLE_NM, CMUT_MEM_PRF_IMG_PATH, CMUT_MEM_ST_CD)
+VALUES (${cnum}, ${mnum}, #{mname}, #{mnickname}, #{profilepath}, #{statuscode});
+  </select>
+</mapper>
+
